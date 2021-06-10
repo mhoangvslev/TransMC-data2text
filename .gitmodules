@@ -1,3 +1,5 @@
 [submodule "TreeNLG"]
 	path = TreeNLG
 	url = https://github.com/facebookresearch/TreeNLG
+[submodule "compared_systems/e2e-eval"]
+	url = https://github.com/tuetschek/e2e-eval.git

@@ -53,27 +53,27 @@ import os
 # nltk.download('punkt')
 # from nltk import word_tokenize
 # from nltk.translate.bleu_score import sentence_bleu
-max_len = 70
+max_len = int(os.environ['GPT_MAX_LEN'])
 
 my_model = mymodel().cuda()
 my_model.eval()
 
-for i in range(1, 9):
+for i in range(1, len(os.listdir(f'./gen_model/{os.environ["GPT_GEN_MOD"]}'))-1 ):
 #     model_name = './gen_model/repro/try_2/'+str(i)+'/model'
 #     save_path = './predictions/reproduce/try_2'
 
 #     model_name = './gen_model/random_init/try_1/'+str(i)+'/model'
 #     save_path = './predictions/no_pretrained/try_1'
     
-    model_name = './gen_model/new/try_3/'+str(i)+'/model'
-    save_path = './predictions/new/try_3'
+    model_name = f'./gen_model/{os.environ["GPT_GEN_MOD"]}/{i}/model'
+    save_path = f'./predictions/{os.environ["GPT_GEN_MOD"]}'
     
     my_model.load_state_dict(torch.load(model_name))
     print('ok') 
     if i == 1:
 #         e2e_dataset = e2eDataset(csv_file='dataset/devset.csv', tokenizer=my_model.tokenizer)
         e2e_dataset = e2eDataset(csv_file='dataset/testset_w_refs.csv', tokenizer=my_model.tokenizer)
-        dataloader = DataLoader(e2e_dataset, batch_size=1, shuffle=False, num_workers=4)
+        dataloader = DataLoader(e2e_dataset, batch_size=int(os.environ['GPT_BATCH_SIZE']), shuffle=False, num_workers=4)
         same_condition = []
         ref_sentences = []
         input_ids_list = []
@@ -110,7 +110,7 @@ for i in range(1, 9):
     f_pred = open(save_path+'/f_pred_'+str(i)+'.txt', 'w')
 
 
-    for k in range(len(ref_sentences)):
+    for k in tqdm(range(len(ref_sentences))):
         input_ids = input_ids_list[k]
         input_len = len(input_ids)
 

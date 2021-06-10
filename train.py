@@ -58,7 +58,7 @@ class e2eDataset(Dataset):
 ## finetune bert_model
 def main():
     e2e_dataset = e2eDataset(csv_file='dataset/trainset.csv', tokenizer=my_model.tokenizer)
-    dataloader = DataLoader(e2e_dataset, batch_size=1, shuffle=True, num_workers=4)    
+    dataloader = DataLoader(e2e_dataset, batch_size=int(os.environ['GPT_BATCH_SIZE']), shuffle=True, num_workers=4)    
 
     # Parameters:
     epoch = 6

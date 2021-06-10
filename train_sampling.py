@@ -73,7 +73,7 @@ class e2eDataset(Dataset):
 ## finetune bert_model
 def main():
     e2e_dataset = e2eDataset(csv_file1='dataset/trainset.csv', csv_file2='dataset/devset.csv', tokenizer=my_model.tokenizer)
-    dataloader = DataLoader(e2e_dataset, batch_size=1, shuffle=True, num_workers=4)    
+    dataloader = DataLoader(e2e_dataset, batch_size=int(os.environ['GPT_BATCH_SIZE']), shuffle=True, num_workers=4)    
 
     # Parameters:
     epoch = 10
@@ -105,10 +105,10 @@ def main():
         """savining point"""
 #         if (epoch+1)%2 == 0:
         save_model(epoch+1)
-#     save_model('final') # final_model     
-#     save_path = 'gen_model/base_devtrain_3/final/'
-#     my_model.bert_model.save_pretrained(save_path)
-#     my_model.tokenizer.save_pretrained(save_path)
+    save_model('final') # final_model     
+    save_path = 'gen_model/base4_sample_30/final/'
+    my_model.bert_model.save_pretrained(save_path)
+    my_model.tokenizer.save_pretrained(save_path)
 
 
 def save_model(iteration):

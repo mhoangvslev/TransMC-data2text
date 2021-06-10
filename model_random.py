@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import sys
 import math
 import pandas as pd
+import os
 
 from transformers import *
 
@@ -36,7 +37,7 @@ class mymodel(nn.Module):
 #         print(condition_token)                            
         
         # model_class, tokenizer_class, pretrained_weights = (GPT2Model, GPT2Tokenizer, 'gpt2')
-        model_class, tokenizer_class, pretrained_weights = (GPT2Model, GPT2Tokenizer, '/data/private/GPT/openai-gpt2/base/')        
+        model_class, tokenizer_class, pretrained_weights = (GPT2Model, GPT2Tokenizer, os.environ['GPT_MODEL'])        
         self.tokenizer = tokenizer_class.from_pretrained(pretrained_weights)
 
         special_tokens = {'bos_token': '<START>', 'additional_special_tokens': condition_token}
